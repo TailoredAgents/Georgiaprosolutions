@@ -4,7 +4,7 @@ services:
     runtime: node
     # Paid Starter web service ($7/month); database and cron are separate resources.
     plan: starter
-    buildCommand: npm ci && npm run build
+    buildCommand: npm ci --include=dev && npm run build
     preDeployCommand: npm run db:migrate
     startCommand: npm run start -- --port $PORT
     healthCheckPath: /api/health
@@ -42,7 +42,7 @@ services:
     name: georgia-pro-retention
     runtime: node
     schedule: "17 7 * * *"
-    buildCommand: npm ci --omit=dev
+    buildCommand: npm ci --include=prod --omit=dev
     startCommand: npm run db:prune
     envVars:
       - key: NODE_VERSION

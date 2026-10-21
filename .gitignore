@@ -7,5 +7,6 @@ playwright-report/
 test-results/
 qa/screenshots/
 qa/runtime.json
+qa/render-validation/
 *.tsbuildinfo
 .DS_Store

@@ -59,3 +59,9 @@ If the Postgres image is not already available, pull it from the official Docker
 - No actual customer data was collected. Stock images and fictional analytics remain clearly identified.
 - The full dependency audit reports a development-only transitive `braces` advisory through the Next ESLint toolchain (five affected development dependency entries). The production dependency audit is clean. No compatible upstream fix was offered by npm at delivery; do not force a downgrade of Next's lint configuration. Recheck when updating the toolchain.
 - Owner approval, authentic project imagery, coverage/surface/material confirmation, production credentials/database, notification delivery, and official-domain authorization are required before turning this sales concept into the authorized official site.
+
+## Render build dependency regression check
+
+After the first Render deployment reported `Cannot find module '@tailwindcss/postcss'`, the install configuration was corrected to include compilation dependencies under `NODE_ENV=production`. Both web-service Blueprints now use `npm ci --include=dev && npm run build`, and `.npmrc` protects existing services still using a plain `npm ci` build command. The retention job explicitly overrides that default with `--include=prod --omit=dev`.
+
+The corrected source was tested in a fresh Linux container using Node 22.22.0 with `NODE_ENV=production` and preview mode. The source archive contained repository files only, with no local environment, existing `node_modules`, or build cache. A plain `npm ci` installed the PostCSS plugin successfully, and `npm run build` completed compilation, TypeScript checking, and generation of every route. This verifies the deployment build fix locally; it does not assert that the subsequent Render deployment has completed.

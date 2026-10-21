@@ -10,10 +10,14 @@ Prepared and tested locally; **not deployed**. Source repository: [TailoredAgent
 2. In Render, connect that repository and select the root `render.yaml` Blueprint. This defines one Node web service using `plan: starter`, the $7/month paid instance, and does not provision a database. The agency selects/accepts hosting charges directly in Render. See [Render's published Starter comparison](https://render.com/articles/render-vs-railway) for the current listed instance price; any other resources or usage are billed separately.
 3. Set `SITE_URL` to the exact assigned HTTPS origin, such as the service's actual `https://…onrender.com` URL. Do not use an invented URL or a localhost origin. Keep `SITE_MODE=preview`, `ALLOW_INDEXING=false`, and both analytics flags false.
 4. Run `npm run admin:setup` locally to generate credentials for the person presenting the private dashboard. Set the email and hash in Render's **private environment variables**. Use the Blueprint-generated session secret or provide at least 32 random characters. Never place a plaintext password in source or a Blueprint.
-5. Deploy using build command `npm ci && npm run build`, start command `npm run start -- --port $PORT`, and health path `/api/health`. The Blueprint has automatic deployment off.
+5. Deploy using build command `npm ci --include=dev && npm run build`, start command `npm run start -- --port $PORT`, and health path `/api/health`. The Blueprint has automatic deployment off.
 6. Verify all five public routes over HTTPS, noindex headers, estimate preview confirmation, `/admin` authorization, dashboard sample label, and logout. Share the assigned verified HTTPS URL only after this check.
 
-Node 22 or newer is required. The Blueprint pins the version available during development; update to a currently patched Node 22 release as part of deployment maintenance. Build/install must include dev dependencies because Tailwind, TypeScript, and lint tooling are build inputs. Do not set `NPM_CONFIG_PRODUCTION=true` during the web-service build.
+Node 22 or newer is required. The Blueprint pins the version available during development; update to a currently patched Node 22 release as part of deployment maintenance. Build/install must include dev dependencies because Tailwind, PostCSS, TypeScript, and type definitions are build inputs. Both web-service Blueprints explicitly install with `--include=dev`. The project `.npmrc` also includes development dependencies so existing Render services using `npm ci && npm run build` receive the same protection under `NODE_ENV=production`. The retention job explicitly installs production dependencies only.
+
+### Recovering a missing PostCSS build dependency
+
+If a Render build fails with `Cannot find module '@tailwindcss/postcss'`, deploy the commit containing `.npmrc` and the explicit build command above. Keep `NODE_ENV=production`; it is correct for the deployed app. Sync the Blueprint, then select **Manual Deploy → Clear build cache & deploy** on the web service using the latest `main` commit. This re-installs build tooling from the lockfile. No application dependencies need to be moved into runtime dependencies.
 
 Render's documented Next.js web-service workflow: [Deploy a Next.js App](https://render.com/docs/deploy-nextjs-app).
 
