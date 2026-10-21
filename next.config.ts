@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR || ".next",
-  images: { qualities: [75, 85, 90] },
+  images: { qualities: [75, 85, 90], minimumCacheTTL: 86400 },
   devIndicators: false,
   poweredByHeader: false,
   async headers() {

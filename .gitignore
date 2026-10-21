@@ -8,5 +8,7 @@ test-results/
 qa/screenshots/
 qa/runtime.json
 qa/render-validation/
+qa/performance/
+.next-audit*/
 *.tsbuildinfo
 .DS_Store

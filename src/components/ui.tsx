@@ -34,7 +34,7 @@ export function Logo({ light = false }: { light?: boolean }) {
         />
       </svg>
       <span>
-        GEORGIA PRO<small>S O L U T I O N S</small>
+        GEORGIA PRO <small>SOLUTIONS</small>
       </span>
     </Link>
   );
@@ -77,8 +77,9 @@ export function Photo({
         alt={alt}
         fill
         sizes={sizes}
-        priority={priority}
-        quality={85}
+        loading={priority ? "eager" : undefined}
+        fetchPriority={priority ? "high" : undefined}
+        quality={75}
       />
     </div>
   );
@@ -112,7 +113,11 @@ export function ServiceCards() {
       {services.map((s) => (
         <Link href={`/services#${s.id}`} className="service-card" key={s.id}>
           <div className="service-photo">
-            <Photo src={s.image} alt={s.alt} />
+            <Photo
+              src={s.image}
+              alt={s.alt}
+              sizes="(max-width:650px) calc(100vw - 40px), (max-width:1440px) calc(33vw - 40px), 425px"
+            />
             <span className="service-number">{s.number} /</span>
             <span className="circle-arrow">
               <ArrowUpRight size={22} />

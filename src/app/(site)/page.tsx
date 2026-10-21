@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -20,7 +21,12 @@ import {
 import { Reveal } from "@/components/reveal";
 import { Gallery } from "@/components/gallery";
 import { gallery } from "@/lib/business";
-export const metadata = { alternates: { canonical: "/" } };
+export const metadata = pageMetadata({
+  title: "Georgia Pro Solutions | Property Services in Allentown, GA",
+  description:
+    "Lawn care, pressure washing, and junk removal with one local company. Explore Georgia Pro Solutions in Allentown, Georgia and discuss your property needs.",
+  path: "/",
+});
 export default function Home() {
   return (
     <>
@@ -59,6 +65,7 @@ export default function Home() {
               src="/images/home-hero.jpg"
               alt="Illustrative sunlit home with a beautifully maintained green lawn"
               priority
+              sizes="(max-width:650px) calc(100vw - 58px), (max-width:1440px) calc(50vw - 56px), 660px"
             />
             <div className="hero-image-label">
               <span>PROPERTY CARE, FROM EVERY ANGLE.</span>
@@ -68,7 +75,7 @@ export default function Home() {
               <Photo
                 src="/images/pressure-washing.jpg"
                 alt="Illustrative professional exterior surface cleaning"
-                priority
+                sizes="(max-width:650px) 128px, (max-width:900px) 145px, (max-width:1150px) 165px, 205px"
               />
               <div>
                 <Droplets size={17} />

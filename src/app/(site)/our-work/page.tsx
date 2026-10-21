@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Eyebrow, ClosingCTA, Button } from "@/components/ui";
 import { Gallery } from "@/components/gallery";
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Our Work & Inspiration",
   description:
     "Explore a visual guide to lawn care, exterior cleaning, and clearer spaces. Illustrative property-care photography for the Georgia Pro Solutions concept.",
-  alternates: { canonical: "/our-work" },
-};
+  path: "/our-work",
+});
 export default function Work() {
   return (
     <>

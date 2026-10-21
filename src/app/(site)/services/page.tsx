@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { Check, ArrowDownRight, ArrowUpRight, Plus } from "lucide-react";
 import {
@@ -11,12 +11,12 @@ import {
 } from "@/components/ui";
 import { Reveal } from "@/components/reveal";
 import { services } from "@/lib/business";
-export const metadata: Metadata = {
-  title: "Property Services",
+export const metadata = pageMetadata({
+  title: "Lawn Care, Washing & Hauling",
   description:
     "Explore lawn care, pressure washing, and junk removal with Georgia Pro Solutions in Allentown, Georgia.",
-  alternates: { canonical: "/services" },
-};
+  path: "/services",
+});
 const faqs = [
   [
     "Where do you provide service?",

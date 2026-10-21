@@ -2,7 +2,7 @@
 
 ## Current status
 
-Prepared and tested locally; **not deployed**. Source repository: [TailoredAgents/Georgiaprosolutions](https://github.com/TailoredAgents/Georgiaprosolutions). The public preview still needs a Render web service. Never send the localhost URL to the prospect as a hosted website.
+The customer preview is hosted at [georgia-pro-solutions.onrender.com](https://georgia-pro-solutions.onrender.com/). Source repository: [TailoredAgents/Georgiaprosolutions](https://github.com/TailoredAgents/Georgiaprosolutions). Automatic deployments are disabled in the Blueprint: after pushing an update, use **Manual Deploy → Deploy latest commit** in Render. Never send the localhost URL to the prospect as a hosted website.
 
 ## Customer preview
 

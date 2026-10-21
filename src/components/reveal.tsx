@@ -1,5 +1,5 @@
 "use client";
-import { motion, useReducedMotion } from "motion/react";
+import { useEffect, useRef } from "react";
 export function Reveal({
   children,
   className = "",
@@ -7,16 +7,31 @@ export function Reveal({
   children: React.ReactNode;
   className?: string;
 }) {
-  const reduced = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || matchMedia("(prefers-reduced-motion: reduce)").matches)
+      return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        element.animate(
+          [
+            { opacity: 0.72, transform: "translateY(12px)" },
+            { opacity: 1, transform: "translateY(0)" },
+          ],
+          { duration: 550, easing: "cubic-bezier(.22,1,.36,1)" },
+        );
+        observer.disconnect();
+      },
+      { threshold: 0.08 },
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
   return (
-    <motion.div
-      className={className}
-      initial={false}
-      whileInView={reduced ? undefined : { opacity: [0.7, 1], y: [12, 0] }}
-      viewport={{ once: true, amount: 0.08 }}
-      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <div ref={ref} className={className}>
       {children}
-    </motion.div>
+    </div>
   );
 }

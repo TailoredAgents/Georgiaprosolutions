@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Suspense } from "react";
 import { Phone, MapPin, ArrowUpRight, MessageCircle } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
 import { Eyebrow, Photo } from "@/components/ui";
 import { business, preview } from "@/lib/business";
-export const metadata: Metadata = {
-  title: "Request an Estimate",
+export const metadata = pageMetadata({
+  title: "Request a Property Service Estimate",
   description:
     "Tell Georgia Pro Solutions about your property. Request lawn care, pressure washing, or junk removal in the Allentown, Georgia area.",
-  alternates: { canonical: "/contact" },
-};
+  path: "/contact",
+});
 export default function Contact() {
   return (
     <section className="contact-page">

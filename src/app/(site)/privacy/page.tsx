@@ -1,12 +1,12 @@
 import { Eyebrow } from "@/components/ui";
 import { preview } from "@/lib/business";
-import type { Metadata } from "next";
-export const metadata: Metadata = {
+import { pageMetadata } from "@/lib/seo";
+export const metadata = pageMetadata({
   title: "Privacy",
   description:
     "How estimate requests and optional anonymous analytics are handled.",
-  alternates: { canonical: "/privacy" },
-};
+  path: "/privacy",
+});
 export default function Privacy() {
   return (
     <section className="section privacy-page">

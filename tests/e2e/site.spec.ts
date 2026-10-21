@@ -219,3 +219,67 @@ test("preview remains noindex and does not collect analytics", async ({
   });
   expect(await event.json()).toEqual({ collected: false });
 });
+
+test("public pages deliver unique server metadata, canonical URLs and branded sharing cards", async ({
+  page,
+  request,
+}) => {
+  const titles = new Set<string>();
+  const descriptions = new Set<string>();
+  for (const route of [...routes, "/privacy"]) {
+    const response = await page.goto(route);
+    const html = await response!.text();
+    // Search and sharing metadata must be present before browser JavaScript runs.
+    expect(html).toContain('property="og:title"');
+    expect(html).toContain('rel="canonical"');
+    const title = await page.title();
+    const description = await page
+      .locator('meta[name="description"]')
+      .getAttribute("content");
+    expect(title).toContain("Georgia Pro Solutions");
+    expect(description!.length).toBeGreaterThan(60);
+    titles.add(title);
+    descriptions.add(description!);
+    const canonical = await page
+      .locator('link[rel="canonical"]')
+      .getAttribute("href");
+    const sharingUrl = await page
+      .locator('meta[property="og:url"]')
+      .getAttribute("content");
+    expect(new URL(canonical!).href).toBe(
+      new URL(route, "http://localhost:43188").href,
+    );
+    expect(new URL(sharingUrl!).href).toBe(
+      new URL(route, "http://localhost:43188").href,
+    );
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
+      "content",
+      title,
+    );
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+      "content",
+      "summary_large_image",
+    );
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      "content",
+      /noindex/,
+    );
+    const image = await page
+      .locator('meta[property="og:image"]')
+      .first()
+      .getAttribute("content");
+    expect(image).toMatch(/^http:\/\/localhost:43188\/opengraph-image/);
+  }
+  expect(titles.size).toBe(routes.length + 1);
+  expect(descriptions.size).toBe(routes.length + 1);
+  const image = await request.get("/opengraph-image");
+  expect(image.status()).toBe(200);
+  expect(image.headers()["content-type"]).toContain("image/png");
+  const body = await image.body();
+  expect(body.readUInt32BE(16)).toBe(1200);
+  expect(body.readUInt32BE(20)).toBe(630);
+  await page.goto("/");
+  const hero = page.locator(".hero-main-photo img");
+  await expect(hero).toHaveAttribute("loading", "eager");
+  await expect(hero).toHaveAttribute("fetchpriority", "high");
+});

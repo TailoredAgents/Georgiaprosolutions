@@ -86,7 +86,7 @@ export function Gallery({
               trigger.current = e.currentTarget;
               setActive(i);
             }}
-            aria-label={`Enlarge ${p.title}`}
+            aria-label={`${p.category} · Illustrative ${p.title} — Enlarge image`}
           >
             <Image
               src={p.image}
@@ -103,7 +103,7 @@ export function Gallery({
             </span>
             <span className="gallery-label">
               <span>
-                <small>{p.category} · Illustrative</small>
+                <small>{p.category} · Illustrative</small>{" "}
                 <strong>{p.title}</strong>
               </span>
               <ArrowUpRight size={24} />

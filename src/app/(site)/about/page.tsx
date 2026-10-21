@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ArrowUpRight, MapPin } from "lucide-react";
 import { Eyebrow, Photo, Button, ClosingCTA, ValueList } from "@/components/ui";
 import { Reveal } from "@/components/reveal";
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "About Us",
   description:
     "Get to know Georgia Pro Solutions, a property-services company based in Allentown, Georgia, offering lawn care, pressure washing, and junk removal.",
-  alternates: { canonical: "/about" },
-};
+  path: "/about",
+});
 export default function About() {
   return (
     <>

@@ -10,7 +10,11 @@ export const business = {
   verifiedByOwner: false,
 };
 export const preview = process.env.SITE_MODE !== "production";
-export const siteUrl = process.env.SITE_URL || "http://localhost:3000";
+export const siteUrl = (
+  process.env.SITE_URL ||
+  process.env.RENDER_EXTERNAL_URL ||
+  "http://localhost:3000"
+).replace(/\/+$/, "");
 export const services = [
   {
     id: "lawn-care",

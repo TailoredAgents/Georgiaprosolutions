@@ -1,4 +1,5 @@
-import { Header, Footer } from "@/components/navigation";
+import { Header } from "@/components/navigation";
+import { Footer } from "@/components/footer";
 import { Analytics } from "@/components/analytics";
 import { Suspense } from "react";
 import { BusinessSchema } from "@/components/business-schema";
