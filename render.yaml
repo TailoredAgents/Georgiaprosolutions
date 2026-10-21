@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: georgia-pro-solutions
+    runtime: node
+    # Paid Starter web service ($7/month), rather than the free instance.
+    plan: starter
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start -- --port $PORT
+    healthCheckPath: /api/health
+    autoDeployTrigger: "off"
+    envVars:
+      - key: NODE_VERSION
+        value: 22.19.0
+      - key: NODE_ENV
+        value: production
+      - key: SITE_MODE
+        value: preview
+      - key: ALLOW_INDEXING
+        value: "false"
+      - key: SITE_URL
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD_HASH
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ANALYTICS_ENABLED
+        value: "false"
+      - key: NEXT_PUBLIC_ANALYTICS_ENABLED
+        value: "false"
+# This preview blueprint intentionally does not provision a paid database.
+# For production, use render.production.yaml with a managed PostgreSQL database.

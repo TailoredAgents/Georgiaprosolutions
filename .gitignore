@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.next-qa-*/
+.env*
+!.env.example
+playwright-report/
+test-results/
+qa/screenshots/
+qa/runtime.json
+*.tsbuildinfo
+.DS_Store
